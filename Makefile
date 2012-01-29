@@ -1,10 +1,5 @@
-.PHONY: test
+.PHONY: default
 
-O ?= ${cwd}/.obj
+default: test
 
-dmd := $(if ${gdc},gdmd,dmd)
-subdirs ?= . detail beard
-libfiles ?= $(foreach d,$(addprefix ${cwd}/,${subdirs}),$(wildcard ${d}/*.d))
-
-test:
-	${MAKE} -C test
+include beard/Makefile

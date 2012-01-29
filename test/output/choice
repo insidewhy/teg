@@ -1,7 +1,7 @@
 choice 3: beard.variant.Variant {
-    mousedeer.test.choice.Stars,
+    teg.test.choice.Stars,
     char,
-    mousedeer.test.choice.Integer,
+    teg.test.choice.Integer,
     teg.range.Range
 }[] => [
     C,
@@ -9,7 +9,7 @@ choice 3: beard.variant.Variant {
     [34mStars[0;m: "***+",
     [34mInteger[0;m: "123"
 ]
-node 1: mousedeer.test.choice.Id[] => [
+node 1: teg.test.choice.Id[] => [
     [34mId[0;m: "kitten",
     [34mId[0;m: "friend",
     [34mId[0;m: "yeah"

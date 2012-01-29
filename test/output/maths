@@ -1,4 +1,4 @@
-basic maths: mousedeer.test.maths.BasicExpression[] => [
+basic maths: teg.test.maths.BasicExpression[] => [
     [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
         [34mBasicMultiplication[0;m: [
             "3"
@@ -22,7 +22,7 @@ basic maths: mousedeer.test.maths.BasicExpression[] => [
         ]
     ]
 ]
-maths: mousedeer.test.maths.Expression[] => [
+maths: teg.test.maths.Expression[] => [
     [34mExpression[0;m: [34mAddition[0;m: [
         "3",
         [34mMultiplication[0;m: [

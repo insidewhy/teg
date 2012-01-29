@@ -1,5 +1,5 @@
 .SECONDARY:
-.PHONY: default tbpeg teg variant choice joined force
+.PHONY: default tbpeg teg variant choice joined
 
 default: variant teg maths choice joined
 

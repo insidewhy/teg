@@ -1,6 +1,6 @@
-module mousedeer.test.joined;
+module teg.test.joined;
 
-import mousedeer.test.common;
+import teg.test.common;
 
 int main() {
     auto s = new Stream!Whitespace("hey-baby - boy");

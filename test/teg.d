@@ -1,6 +1,6 @@
-module mousedeer.test.basic;
+module teg.test.basic;
 
-import mousedeer.test.common;
+import teg.test.common;
 
 int main() {
     auto s = new Stream!Whitespace("var friend = baby");

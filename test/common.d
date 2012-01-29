@@ -1,4 +1,4 @@
-module mousedeer.test.common;
+module teg.test.common;
 
 import teg.stores;
 import beard.io;

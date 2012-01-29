@@ -1,7 +1,7 @@
 module teg.char_from;
 
 import std.string : indexOf;
-import teg.detail.match_one_char;
+import teg.detail.store_one_char;
 
 class CharFrom(string T) {
     mixin storeOneChar;

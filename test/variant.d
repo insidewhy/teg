@@ -1,6 +1,6 @@
-module mousedeer.test.variant;
+module teg.test.variant;
 
-import mousedeer.test.common;
+import teg.test.common;
 import beard.variant;
 import beard.io;
 

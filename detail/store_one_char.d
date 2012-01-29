@@ -1,4 +1,4 @@
-module teg.detail.match_one_char;
+module teg.detail.store_one_char;
 
 public import teg.detail.parser : storingParser;
 

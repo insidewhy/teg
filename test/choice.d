@@ -1,6 +1,6 @@
-module mousedeer.test.choice;
+module teg.test.choice;
 
-import mousedeer.test.common;
+import teg.test.common;
 
 struct Id {
     mixin makeNode!(ManyPlus!(CharNotFrom!"\n\t "));

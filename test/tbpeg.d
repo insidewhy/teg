@@ -1,6 +1,6 @@
-module mousedeer.test.tbpeg;
+module teg.test.tbpeg;
 
-import mousedeer.test.common;
+import teg.test.common;
 import teg.all;
 import beard.io;
 

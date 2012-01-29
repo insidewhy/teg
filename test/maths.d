@@ -1,6 +1,6 @@
-module mousedeer.test.maths;
+module teg.test.maths;
 
-import mousedeer.test.common;
+import teg.test.common;
 
 alias ManyPlus!(CharRange!"09") Integer;
 

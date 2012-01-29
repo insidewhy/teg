@@ -1,6 +1,6 @@
 module teg.char_range;
 
-import teg.detail.match_one_char;
+import teg.detail.store_one_char;
 
 // "az09" would match characters through a-z or 0-9
 class CharRange(string T) {

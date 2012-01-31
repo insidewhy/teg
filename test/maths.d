@@ -20,7 +20,12 @@ alias Choice!(
 class Expression { mixin makeNode!Addition; }
 // Tree* parsers must be class rather than struct
 class Addition { mixin makeNode!(TreeJoined!(Char!"+", Multiplication)); }
-class Multiplication { mixin makeNode!(TreeJoined!(Char!"*", Term)); }
+class Multiplication { mixin makeNode!(TreeJoined!(Char!"*", Signed)); }
+
+alias Term Signed;
+// todo:
+// class Signed { mixin makeNode!(CharFrom!"+-", TreeOptional!Term); }
+
 alias Choice!(
     Integer, Sequence!(Char!"(", Node!Expression, Char!")")) Term;
 

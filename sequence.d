@@ -4,7 +4,8 @@ import teg.detail.parser;
 import teg.stores;
 import teg.skip;
 
-import beard.meta;
+import beard.meta.type_list : TL;
+import beard.meta.fold_left : foldLeft, foldLeft2;
 
 import std.typetuple;
 import std.typecons;

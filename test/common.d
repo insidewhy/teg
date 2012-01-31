@@ -7,7 +7,6 @@ import std.stdio;
 
 public import teg.all;
 public import beard.io;
-public import beard.meta;
 
 auto nFailures = 0u;
 

@@ -2,7 +2,8 @@ module teg.choice;
 
 import teg.detail.parser;
 import teg.stores;
-import beard.meta;
+import beard.meta.fold_left : foldLeft2;
+import beard.meta.type_set : TSet;
 import beard.variant;
 import std.typetuple : staticMap;
 

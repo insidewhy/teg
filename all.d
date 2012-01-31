@@ -18,3 +18,4 @@ public import teg.optional;
 public import teg.empty_string;
 public import teg.node;
 public import teg.tree_joined;
+public import teg.tree_optional;

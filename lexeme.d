@@ -1,7 +1,7 @@
 module teg.lexeme;
 
 import teg.sequence;
-import beard.meta;
+import beard.meta.fold_left;
 
 import teg.store;
 import teg.stores;

@@ -5,8 +5,8 @@ default: variant teg maths choice joined
 
 debug     ?= 1
 cwd       ?= ..
-subdirs   ?= . detail beard
-comp_args := common.d
+subdirs   ?= . detail beard beard/meta beard/string_util
+comp_args := common.d -I..
 
 include ../beard/Makefile
 include ../beard/Makefile.test

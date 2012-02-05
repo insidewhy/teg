@@ -12,7 +12,6 @@ class TreeJoined(NodeT, bool SkipWs, J, T...) {
     mixin TreeParser!NodeT;
 
     static bool skip(S, O)(S s, ref O o) {
-        //////////////////////
         static if (! isVariant!ShortStores)
             o = ShortStores.init;
 

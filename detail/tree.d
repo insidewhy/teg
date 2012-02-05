@@ -24,6 +24,7 @@ template TreeParser(NodeT) {
         static ref getLongStorage(O)(ref O o) { return o.value_; }
     }
 
+  public:
     static if (isVariant!ShortStores) {
         static auto ref getShortStorage(O)(ref O o) { return o; }
         alias Variant!(LongStores, ShortStores.types) value_type;

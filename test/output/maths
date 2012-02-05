@@ -56,5 +56,24 @@ maths: teg.test.maths.Expression[] => [
             "3",
             "5"
         ]
+    ],
+    [34mExpression[0;m: [34mAddition[0;m: [
+        "9",
+        [34mSigned[0;m: (
+            [
+                -
+            ],
+            "9"
+        )
+    ],
+    [34mExpression[0;m: [34mMultiplication[0;m: [
+        "4",
+        [34mSigned[0;m: (
+            [
+                -,
+                +
+            ],
+            "8"
+        )
     ]
 ]

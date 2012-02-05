@@ -3,7 +3,7 @@ module teg.node;
 import teg.tree_joined;
 public import teg.detail.parser : hasSubparser, storingParser;
 public import teg.choice : Choice;
-public import teg.tree_optional : isTreeOptional;
+public import teg.tree_optional : isTreeOptional, TreeOptionalSequence;
 public import beard.io : printIndented;
 import beard.metaio : printType;
 public import beard.string_util.last_index_of : lastIndexOf;
@@ -43,35 +43,33 @@ private template makeTreeNode(T) {
     static bool skip(S, O)(S s, ref O o) { return T.skip(s, o); }
 }
 
-template makeNode(P...) {
-    static if (containsMatch!(isTreeOptional, P)) {
-        mixin makeTreeNode!(TreeOptionalSequence!(typeof(this), P));
+template makeNode(P...) if (containsMatch!(isTreeOptional, P)) {
+    mixin makeTreeNode!(TreeOptionalSequence!(typeof(this), P));
+}
+
+template makeNode(P...) if (! containsMatch!(isTreeOptional, P)) {
+    alias void __IsNode;
+    // alias stores!subparser value_type;
+    alias typeof(this) value_type;
+
+    mixin hasSubparser!P;
+    mixin storingParser;
+    mixin printNode;
+
+    // nodes should always store but this static if allows the compiler
+    // to give better error messages in case of compile-time errors
+    static if (storesSomething!subparser)
+        stores!subparser value_;
+
+    static bool skip(S, O)(S s, ref O o) {
+        return subparser.parse(s, o.value_);
     }
-    else {
-        alias void __IsNode;
-        // alias stores!subparser value_type;
-        alias typeof(this) value_type;
-
-        mixin hasSubparser!P;
-        mixin storingParser;
-        mixin printNode;
-
-        // nodes should always store but this static if allows the compiler
-        // to give better error messages in case of compile-time errors
-        static if (storesSomething!subparser)
-            stores!subparser value_;
-
-        static bool skip(S, O)(S s, ref O o) {
-            return subparser.parse(s, o.value_);
-        }
-        static bool skip(S)(S s) { return subparser.skip(s); }
-    }
+    static bool skip(S)(S s) { return subparser.skip(s); }
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // specialisations of makeNode that redirect to makeTreeNode
 
-// redirect needed in order to catch TreeOptional subparsers in sequence.
 template makeNode(P : Sequence!(T), T...) {
     mixin makeNode!T;
 }

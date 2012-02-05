@@ -28,12 +28,26 @@ private template removeTreeOptional(T) {
 
 // Parse a sequence of T where at least one T is a TreeOptional
 class TreeOptionalSequence(NodeT, T...) {
-    alias Sequence!(filter!(isTreeOptional, P))  ShortParser;
-    alias Sequence!(map!(removeTreeOptional, P)) LongParser;
+    mixin storingParser;
+
+    alias Sequence!(filter!(isTreeOptional, T))  ShortParser;
+    alias Sequence!(map!(removeTreeOptional, T)) LongParser;
 
     mixin TreeParser!NodeT;
 
     static bool skip(S, O)(S s, ref O o) {
-        return false;
+        LongStores longMatch;
+        create(longMatch);
+        if (LongParser.parse(s, getLongStorage(longMatch))) {
+            o = longMatch;
+            return true;
+        }
+        else if (ShortParser.parse(s, getShortStorage(o))) {
+            return true;
+        }
+        else {
+            o.reset();
+            return false;
+        }
     }
 }

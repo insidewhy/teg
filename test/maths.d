@@ -24,7 +24,7 @@ class Multiplication { mixin makeNode!(TreeJoined!(Char!"*", Signed)); }
 
 alias Term Signed;
 // todo:
-// class Signed { mixin makeNode!(CharFrom!"+-", TreeOptional!Term); }
+// class Signed { mixin makeNode!(TreeOptional!(CharFrom!"+-"), Term); }
 
 alias Choice!(
     Integer, Sequence!(Char!"(", Node!Expression, Char!")")) Term;
@@ -32,7 +32,10 @@ alias Choice!(
 int main() {
     alias ManyPlus!(CharFrom!"\n\t ") Whitespace;
 
-    auto s = new Stream!Whitespace("3 + 1 * (2 + 3 * 2) * (1)");
+    auto s = new Stream!Whitespace(`
+        3 + 1 * (2 + 3 * 2) * (1)
+        8 * 2 + 3 * 5
+    `);
 
     parseTest!(ManyPlus!BasicExpression)("basic maths", s);
     parseTest!(ManyPlus!Expression)("maths", s);

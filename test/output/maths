@@ -20,6 +20,16 @@ basic maths: teg.test.maths.BasicExpression[] => [
                 ]
             ]
         ]
+    ],
+    [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
+        [34mBasicMultiplication[0;m: [
+            "8",
+            "2"
+        ],
+        [34mBasicMultiplication[0;m: [
+            "3",
+            "5"
+        ]
     ]
 ]
 maths: teg.test.maths.Expression[] => [
@@ -35,6 +45,16 @@ maths: teg.test.maths.Expression[] => [
                 ]
             ],
             [34mExpression[0;m: "1"
+        ]
+    ],
+    [34mExpression[0;m: [34mAddition[0;m: [
+        [34mMultiplication[0;m: [
+            "8",
+            "2"
+        ],
+        [34mMultiplication[0;m: [
+            "3",
+            "5"
         ]
     ]
 ]

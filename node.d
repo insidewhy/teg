@@ -2,10 +2,12 @@ module teg.node;
 
 import teg.tree_joined;
 public import teg.detail.parser : hasSubparser, storingParser;
+public import teg.tree_optional : isTreeOptional;
 public import beard.io : printIndented;
 import beard.metaio : printType;
 public import beard.string_util.last_index_of : lastIndexOf;
 public import beard.termcolor : sRed, sNeutral, sBlue, sGreen;
+public import beard.meta.contains : containsMatch;
 
 ////////////////////////////////////////////////////////////////////////////
 // used to break cyclic type chains for self-referential parsers
@@ -41,25 +43,28 @@ private template makeTreeNode(T) {
 }
 
 template makeNode(P...) {
-    // todo: redirect via makeTreeNode if one of P is TreeOptional
-    alias void __IsNode;
-
-    // alias stores!subparser value_type;
-    alias typeof(this) value_type;
-
-    mixin hasSubparser!P;
-    mixin storingParser;
-    mixin printNode;
-
-    // nodes should always store but this static if allows the compiler
-    // to give better error messages in case of compile-time errors
-    static if (storesSomething!subparser)
-        stores!subparser value_;
-
-    static bool skip(S, O)(S s, ref O o) {
-        return subparser.parse(s, o.value_);
+    static if (containsMatch!(isTreeOptional, P)) {
+        // todo: redirect via makeTreeNode
     }
-    static bool skip(S)(S s) { return subparser.skip(s); }
+    else {
+        alias void __IsNode;
+        // alias stores!subparser value_type;
+        alias typeof(this) value_type;
+
+        mixin hasSubparser!P;
+        mixin storingParser;
+        mixin printNode;
+
+        // nodes should always store but this static if allows the compiler
+        // to give better error messages in case of compile-time errors
+        static if (storesSomething!subparser)
+            stores!subparser value_;
+
+        static bool skip(S, O)(S s, ref O o) {
+            return subparser.parse(s, o.value_);
+        }
+        static bool skip(S)(S s) { return subparser.skip(s); }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////

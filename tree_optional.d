@@ -4,5 +4,10 @@ import teg.detail.parser;
 
 // Like optional but split storage of including parser in a variant.
 class TreeOptional(T...) {
-    mixin parser!T;
+    mixin hasSubparser!T;
+    alias void __IsTreeOptional;
+}
+
+template isTreeOptional(T) {
+    enum isTreeOptional = is(T.__IsTreeOptional);
 }

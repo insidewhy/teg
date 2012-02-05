@@ -1,24 +1,22 @@
 module teg.tree_joined;
 
 import teg.joined;
-import teg.stores;
 import teg.detail.tree;
 
 class TreeJoined(NodeT, bool SkipWs, J, T...) {
-    private alias Joined!(SkipWs, true, J, T) JoinedT;
-    alias JoinedT.value_type                  ContainerType;
+    mixin parser!T;
 
-    static if (is (NodeT: void))
-        mixin TreeParser!(false, ContainerType, T);
-    else
-        mixin TreeParser!(true, NodeT, T);
+    private alias subparser                   ShortParser;
+    private alias Joined!(SkipWs, true, J, T) LongParser;
+
+    mixin TreeParser!NodeT;
 
     static bool skip(S, O)(S s, ref O o) {
         //////////////////////
         static if (! isVariant!ShortStores)
             o = ShortStores.init;
 
-        if (! subparser.parse(s, getSubvalue(o))) {
+        if (! subparser.parse(s, getShortStorage(o))) {
             o.reset();
             return false;
         }
@@ -27,7 +25,7 @@ class TreeJoined(NodeT, bool SkipWs, J, T...) {
         if (s.empty()) return true;
         auto save = s.save();
 
-        static if (JoinedT.JoinStores) {
+        static if (LongParser.JoinStores) {
             stores!J joinValue;
             if (! J.parse(s, joinValue)) return true;
         }
@@ -44,19 +42,15 @@ class TreeJoined(NodeT, bool SkipWs, J, T...) {
 
         LongStores v;
         create(v);
-        JoinedT.getSplit(getContainer(v))
-            .push_back(getSubvalue(o)).push_back(second);
+        LongParser.getSplit(getLongStorage(v))
+            .push_back(getShortStorage(o)).push_back(second);
 
-        static if (JoinedT.JoinStores)
-            getContainer(v).join.push_back(joinValue);
+        static if (LongParser.JoinStores)
+            getLongStorage(v).join.push_back(joinValue);
         o = v;
 
-        JoinedT.skipTail(s, getContainer(v));
+        LongParser.skipTail(s, getLongStorage(v));
         return true;
-    }
-
-    static bool skip(S)(S s) {
-        return JoinedT.skip(s);
     }
 }
 

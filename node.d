@@ -2,6 +2,7 @@ module teg.node;
 
 import teg.tree_joined;
 public import teg.detail.parser : hasSubparser, storingParser;
+public import teg.choice : Choice;
 public import teg.tree_optional : isTreeOptional;
 public import beard.io : printIndented;
 import beard.metaio : printType;
@@ -36,7 +37,7 @@ private template makeTreeNode(T) {
     alias T.value_type value_type;
 
     // pushes value_ into the mixing class
-    T.ContainerType    value_;
+    T.NodeStores    value_;
 
     static bool skip(S)(S s) { return T.skip(s); }
     static bool skip(S, O)(S s, ref O o) { return T.skip(s, o); }
@@ -44,7 +45,7 @@ private template makeTreeNode(T) {
 
 template makeNode(P...) {
     static if (containsMatch!(isTreeOptional, P)) {
-        // todo: redirect via makeTreeNode
+        mixin makeTreeNode!(TreeOptionalSequence!(typeof(this), P));
     }
     else {
         alias void __IsNode;

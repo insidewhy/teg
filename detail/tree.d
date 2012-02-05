@@ -3,28 +3,37 @@ module teg.detail.tree;
 // must use public imports as necessary due to mixin
 public import teg.detail.parser;
 public import teg.vector;
+public import teg.stores;
 public import beard.variant;
 
 // T... is the storing part of the parser
-template TreeParser(bool LongIsNode, _LongStores, T...) {
-    mixin parser!T;
-
+// must define ShortParser and LongParser in mixin class.
+template TreeParser(NodeT) {
   private:
-    alias _LongStores               LongStores;
-    private alias stores!subparser  ShortStores;
+    alias stores!ShortParser           ShortStores;
 
-    static if (LongIsNode)
-        static ref getContainer(O)(ref O o) { return o.value_; }
-    else
-        static ref getContainer(O)(ref O o) { return o; }
+    // getLongStorage returns the storage of the node if there is one.
+    static if (is(NodeT : void)) {
+        alias LongParser.value_type    LongStores;
+        static ref getLongStorage(O)(ref O o) { return o; }
+    }
+    else {
+        alias NodeT                    LongStores;
+        alias LongParser.value_type    NodeStores;
+
+        static ref getLongStorage(O)(ref O o) { return o.value_; }
+    }
 
     static if (isVariant!ShortStores) {
-        static auto ref getSubvalue(O)(ref O o) { return o; }
+        static auto ref getShortStorage(O)(ref O o) { return o; }
         alias Variant!(LongStores, ShortStores.types) value_type;
     }
     else {
-        static auto ref getSubvalue(O)(ref O o) { return o.as!ShortStores; }
+        static auto ref getShortStorage(O)(ref O o) { return o.as!ShortStores; }
         alias Variant!(LongStores, ShortStores) value_type;
     }
 
+    static bool skip(S)(S s) {
+        return LongParser.skip(s) || ShortParser.skip(s);
+    }
 }

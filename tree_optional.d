@@ -2,7 +2,6 @@ module teg.tree_optional;
 
 import teg.detail.parser;
 import teg.detail.tree;
-import teg.sequence;
 import teg.stores;
 
 import beard.meta.find : filter;
@@ -27,11 +26,11 @@ private template removeTreeOptional(T) {
 }
 
 // Parse a sequence of T where at least one T is a TreeOptional
-class TreeOptionalSequence(NodeT, T...) {
+class TreeOptionalSequence(alias SeqT, NodeT, T...) {
     mixin storingParser;
 
-    alias Sequence!(filter!(isTreeOptional, T))  ShortParser;
-    alias Sequence!(map!(removeTreeOptional, T)) LongParser;
+    alias SeqT!(filter!(isTreeOptional, T))  ShortParser;
+    alias SeqT!(map!(removeTreeOptional, T)) LongParser;
 
     mixin TreeParser!NodeT;
 

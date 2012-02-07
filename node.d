@@ -4,6 +4,7 @@ import teg.tree_joined;
 public import teg.detail.parser : hasSubparser, storingParser;
 public import teg.choice : Choice;
 public import teg.tree_optional : isTreeOptional, TreeOptionalSequence;
+public import teg.sequence : Sequence;
 public import beard.io : printIndented;
 import beard.metaio : printType;
 public import beard.string_util.last_index_of : lastIndexOf;
@@ -44,7 +45,7 @@ private template makeTreeNode(T) {
 }
 
 template makeNode(P...) if (containsMatch!(isTreeOptional, P)) {
-    mixin makeTreeNode!(TreeOptionalSequence!(typeof(this), P));
+    mixin makeTreeNode!(TreeOptionalSequence!(Sequence, typeof(this), P));
 }
 
 template makeNode(P...) if (! containsMatch!(isTreeOptional, P)) {

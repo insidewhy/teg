@@ -17,6 +17,14 @@ private template _StoreChar(T) {
         return false;
     }
 
+    static bool skip(S)(S s) {
+        if (T.match(s)) {
+            s.advance();
+            return true;
+        }
+        return false;
+    }
+
     alias char value_type;
 }
 
@@ -34,16 +42,29 @@ private template _StoreRange(T...) {
         return true;
     }
 
+    static bool skip(S)(S s) {
+        foreach(P; T) if (! P.skip(s)) {
+            return false;
+        }
+        return true;
+    }
+
     alias Range value_type;
 }
 
 // D only allows pulling attributes into the scope of a class from a pure
 // template otherwise the forwarders wouldn't be neccesary.
-class StoreRange(T...) { mixin _StoreRange!T; }
+class StoreRange(T...) {
+    mixin _StoreRange!T;
+
+    template add(U) { alias StoreRange!(T, U) add; }
+}
 
 class StoreChar(T...) {
     mixin hasSubparser!T;
     mixin _StoreChar!subparser;
+
+    template add(U) { alias StoreRange!(T, U) add; }
 }
 
 // force parsers to store that don't usually store char/range to store when

@@ -1,6 +1,9 @@
 module teg.char_;
 
 import teg.store;
+// d compiler bug enforces this despite public import in storeOneChar
+public import teg.detail.parser : storingParser;
+import teg.detail.store_one_char : storeOneChar;
 
 class Char(string T) {
     enum length = T.length;
@@ -26,4 +29,17 @@ class Char(string T) {
         }
         else return false;
     }
+}
+
+// Allow anything to match but the end of the file or char C.
+// Stores a char.
+class NotChar(char C) {
+    mixin storeOneChar;
+    static bool match(S)(S s) { return s.front() != C; }
+}
+
+// Allow anything to match (but the end of the file) and store it as a char.
+class AnyChar {
+    mixin storeOneChar;
+    static bool match(S)(S s) { return true; }
 }

@@ -9,12 +9,15 @@ private template _StoreChar(T) {
     mixin storingParser;
 
     static bool skip(S, O)(S s, ref O o) {
-        if (T.match(s)) {
-            o = s.front();
-            s.advance();
-            return true;
+        static if (__traits(hasMember, subparser, "match")) {
+            if (T.match(s)) {
+                o = s.front();
+                s.advance();
+                return true;
+            }
+            else return false;
         }
-        return false;
+        else return T.skip(s, o);
     }
 
     static bool skip(S)(S s) {

@@ -1,7 +1,9 @@
 module teg.char_from;
 
 import std.string : indexOf;
-import teg.detail.store_one_char;
+// d compiler bug enforces this despite public import in storeOneChar
+import teg.detail.parser : storingParser;
+import teg.detail.store_one_char : storeOneChar;
 
 class CharFrom(string T) {
     mixin storeOneChar;

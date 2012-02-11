@@ -1,3 +1,4 @@
 lexeme 1: teg.range.Range[] => [
     "first@"
 ]
+lexeme 2: teg.range.Range => "az"

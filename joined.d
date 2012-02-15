@@ -1,10 +1,10 @@
 module teg.joined;
 
-import teg.vector;
 import teg.range;
 import teg.detail.parser;
 import teg.stores;
 
+import beard.vector : Vector, pushBack;
 import beard.io : printIndent, printIndented;
 
 struct Split(T, J) {
@@ -84,7 +84,7 @@ class Joined(bool SkipWs, bool AtLeastOne, J, T...) {
             static if (JoinStores) {
                 stores!J value;
                 if (! J.parse(s, value)) return true;
-                o.join.push_back(value);
+                o.join.pushBack(value);
             }
             else
                 if (! J.skip(s)) return true;
@@ -105,7 +105,7 @@ class Joined(bool SkipWs, bool AtLeastOne, J, T...) {
     private static bool _skip(S, O)(S s, ref O o) {
         stores!subparser value;
         if (! subparser.parse(s, value)) return false;
-        getSplit(o).push_back(value);
+        getSplit(o).pushBack(value);
 
         return true;
     }

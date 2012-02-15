@@ -1,9 +1,10 @@
 module teg.many;
 
-import teg.vector;
 import teg.range;
 import teg.detail.parser;
 import teg.stores : stores, storesChar;
+
+import beard.vector : Vector, pushBack;
 
 import std.traits : Select;
 
@@ -57,7 +58,7 @@ class Many(bool SkipWs, bool AtLeastOne, T...) {
         static if (SkipWs) {
             stores!subparser value;
             if (! subparser.parse(s, value)) return false;
-            o.push_back(value);
+            o.pushBack(value);
         }
         else if (! subparser.skip(s)) return false;
 

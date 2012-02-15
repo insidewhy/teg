@@ -78,9 +78,9 @@ class Sequence(bool SkipWs, T...) {
     alias foldLeft2!(makeIdxStorer!0u, T).types subparsers;
 
     static bool skip(S)(S s) {
+        auto save = s.save();
         if (! T[0].skip(s)) return false;
 
-        auto save = s.save();
         foreach (p; T[1..$]) {
             skip_whitespace(s);
 

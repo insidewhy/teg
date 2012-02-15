@@ -42,10 +42,10 @@ class TreeJoined(NodeT, bool SkipWs, J, T...) {
         LongStores v;
         create(v);
         LongParser.getSplit(getLongStorage(v))
-            .push_back(getShortStorage(o)).push_back(second);
+            .pushBack(getShortStorage(o)).pushBack(second);
 
         static if (LongParser.JoinStores)
-            getLongStorage(v).join.push_back(joinValue);
+            getLongStorage(v).join.pushBack(joinValue);
         o = v;
 
         LongParser.skipTail(s, getLongStorage(v));

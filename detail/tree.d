@@ -2,9 +2,9 @@ module teg.detail.tree;
 
 // must use public imports as necessary due to mixin
 public import teg.detail.parser;
-public import teg.vector;
 public import teg.stores;
 public import beard.variant;
+public import beard.vector;
 
 // T... is the storing part of the parser
 // must define ShortParser and LongParser in mixin class.

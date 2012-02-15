@@ -41,6 +41,9 @@ class BasicStream {
 class BasicFileStream : BasicStream {
     void open(string filepath) {
         filepath_ = filepath;
+        data_.clear();
+        data_ ~= cast (char[]) std.file.read(filepath_);
+        reset();
     }
 
     this(string filepath) { open(filepath); }

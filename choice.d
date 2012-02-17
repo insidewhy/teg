@@ -33,8 +33,14 @@ private template choiceParser(alias S, bool CanBeEmpty, P...) {
         alias stores!SP SS;
 
         static bool skip(S, O)(S s, ref O o) {
-            static if (! storesSomething!SP)
-                return SP.skip(s);
+            static if (! storesSomething!SP) {
+                if (SP.skip(s)) {
+                    static if (isVariant!O) o.reset;
+                    else static if (is(O : Object)) o = null;
+                    return true;
+                }
+                else return false;
+            }
             else static if (isVariant!SS)
                 return SP.skip(s, o);
             else static if (isVariant!O) {

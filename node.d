@@ -8,7 +8,6 @@ public import teg.sequence : Sequence;
 public import beard.io : printIndented;
 import beard.metaio : printType;
 public import beard.string_util.last_index_of : lastIndexOf;
-public import beard.termcolor : sRed, sNeutral, sBlue, sGreen;
 public import beard.meta.contains : containsMatch;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -87,8 +86,7 @@ template makeNode(P : TreeJoinedTight!(J, T), J, T...) {
 template printNode() {
     void printTo(S)(int indent, S stream) {
         immutable name = typeid(this).name;
-        stream.write(sBlue, name[(lastIndexOf(name, '.') + 1)..$],
-                     sNeutral, ": ");
+        stream.write(name[(lastIndexOf(name, '.') + 1)..$], ": ");
         printIndented(stream, indent, value_);
     }
 

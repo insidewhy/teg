@@ -6,13 +6,13 @@ choice 3: beard.variant.Variant {
 }[] => [
     C,
     "hey",
-    [34mStars[0;m: "***+",
-    [34mInteger[0;m: "123"
+    Stars: "***+",
+    Integer: "123"
 ]
 node 1: teg.test.choice.Id[] => [
-    [34mId[0;m: "kitten",
-    [34mId[0;m: "friend",
-    [34mId[0;m: "yeah"
+    Id: "kitten",
+    Id: "friend",
+    Id: "yeah"
 ]
 choice 1: char => v
 choice 2: beard.variant.Variant {

@@ -1,74 +1,74 @@
 basic maths: teg.test.maths.BasicExpression[] => [
-    [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
-        [34mBasicMultiplication[0;m: [
+    BasicExpression: BasicAddition: [
+        BasicMultiplication: [
             "3"
         ],
-        [34mBasicMultiplication[0;m: [
+        BasicMultiplication: [
             "1",
-            [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
-                [34mBasicMultiplication[0;m: [
+            BasicExpression: BasicAddition: [
+                BasicMultiplication: [
                     "2"
                 ],
-                [34mBasicMultiplication[0;m: [
+                BasicMultiplication: [
                     "3",
                     "2"
                 ]
             ],
-            [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
-                [34mBasicMultiplication[0;m: [
+            BasicExpression: BasicAddition: [
+                BasicMultiplication: [
                     "1"
                 ]
             ]
         ]
     ],
-    [34mBasicExpression[0;m: [34mBasicAddition[0;m: [
-        [34mBasicMultiplication[0;m: [
+    BasicExpression: BasicAddition: [
+        BasicMultiplication: [
             "8",
             "2"
         ],
-        [34mBasicMultiplication[0;m: [
+        BasicMultiplication: [
             "3",
             "5"
         ]
     ]
 ]
 maths: teg.test.maths.Expression[] => [
-    [34mExpression[0;m: [34mAddition[0;m: [
+    Expression: Addition: [
         "3",
-        [34mMultiplication[0;m: [
+        Multiplication: [
             "1",
-            [34mExpression[0;m: [34mAddition[0;m: [
+            Expression: Addition: [
                 "2",
-                [34mMultiplication[0;m: [
+                Multiplication: [
                     "3",
                     "2"
                 ]
             ],
-            [34mExpression[0;m: "1"
+            Expression: "1"
         ]
     ],
-    [34mExpression[0;m: [34mAddition[0;m: [
-        [34mMultiplication[0;m: [
+    Expression: Addition: [
+        Multiplication: [
             "8",
             "2"
         ],
-        [34mMultiplication[0;m: [
+        Multiplication: [
             "3",
             "5"
         ]
     ],
-    [34mExpression[0;m: [34mAddition[0;m: [
+    Expression: Addition: [
         "9",
-        [34mSigned[0;m: (
+        Signed: (
             [
                 -
             ],
             "9"
         )
     ],
-    [34mExpression[0;m: [34mMultiplication[0;m: [
+    Expression: Multiplication: [
         "4",
-        [34mSigned[0;m: (
+        Signed: (
             [
                 -,
                 +

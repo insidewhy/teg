@@ -1,20 +1,9 @@
 module teg.not;
 
-import teg.detail.parser;
+import teg.try_;
 
-class Not(T...) {
-    mixin parser!T;
-
-    static bool skip(S)(S s) {
-        static if (__traits(hasMember, subparser, "match")) {
-            return subparser.match(s);
-        }
-        else {
-            auto save = s.save();
-            auto result = subparser.skip(s);
-            if (result) s.restore(save);
-            return result;
-        }
-    }
+class Not(T...) : Try!T {
+    alias Try!T  base;
+    static bool skip(S)(S s) { return ! base.skip(s); }
     static bool skip(S, O)(S s, ref O o) { return skip(s); }
 }

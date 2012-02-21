@@ -5,6 +5,7 @@ public import teg.detail.parser : hasSubparser, storingParser;
 public import teg.choice : Choice;
 public import teg.tree_optional : isTreeOptional, TreeOptionalSequence;
 public import teg.sequence : Sequence;
+public import teg.lexeme : Lexeme;
 public import beard.io : printIndented;
 import beard.metaio : printType;
 public import beard.string_util.last_index_of : lastIndexOf;
@@ -43,6 +44,11 @@ private template makeTreeNode(T) {
     static bool skip(S, O)(S s, ref O o) { return T.skip(s, o); }
 }
 
+// doesn't seem to work :(
+template makeNode(P : Lexeme!(T), T...) if (containsMatch!(isTreeOptional, T)) {
+    mixin makeTreeNode!(TreeOptionalSequence!(Lexeme, typeof(this), T));
+}
+
 template makeNode(P...) if (containsMatch!(isTreeOptional, P)) {
     mixin makeTreeNode!(TreeOptionalSequence!(Sequence, typeof(this), P));
 }
@@ -69,7 +75,6 @@ template makeNode(P...) if (! containsMatch!(isTreeOptional, P)) {
 
 //////////////////////////////////////////////////////////////////////////////
 // specialisations of makeNode that redirect to makeTreeNode
-
 template makeNode(P : Sequence!(T), T...) {
     mixin makeNode!T;
 }

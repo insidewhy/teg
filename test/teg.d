@@ -19,6 +19,7 @@ int main() {
 
     parseTest!(ManyPlus!SimpleVariable)("lexeme", s);
 
+    // this one won't parse the full string
     parseTest!(Store!(SimpleVariable))("store range", s);
 
     return nFailures;

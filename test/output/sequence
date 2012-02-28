@@ -1,0 +1,9 @@
+sequence 1: std.typecons.Tuple {
+    teg.range.Range,
+    teg.range.Range,
+    teg.range.Range
+} => (
+    "public",
+    "mewmew",
+    "friend"
+)

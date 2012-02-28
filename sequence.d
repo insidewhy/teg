@@ -37,12 +37,35 @@ private template sequenceStorage(T...) {
         alias Tuple!T sequenceStorage;
 }
 
+private struct TupleOffset(size_t idx_, T) {
+    alias void __IsTupleOffset;
+    this(T *tup) { tuple = tup; }
+    enum { idx = idx_ }
+    enum { length = T.length - idx }
+    T *tuple;
+}
+
+private auto ref get(size_t idx, T)(ref T tuple)  {
+    static if (is(tuple.__IsTupleOffset)) {
+        return (*tuple.tuple)[idx + tuple.idx];
+    }
+    else
+        return tuple[idx];
+}
+
 private struct parseSeqIdx(size_t idx, P) {
     static bool skip(S, O)(S s, ref O o) {
-        static if (isTuple!O)
-            return P.parse(s, o[idx]);
+        static if (isTuple!O || is(O.__IsTupleOffset))
+            return P.parse(s, get!(idx, O)(o));
         else
             return P.parse(s, o);
+    }
+}
+
+private struct parseTupleFrom(size_t idx, P) {
+    static bool skip(S, O)(S s, ref O o) {
+        auto tupAdapter = TupleOffset!(idx, O)(&o);
+        return P.parse(s, tupAdapter);
     }
 }
 
@@ -56,8 +79,8 @@ private template makeIdxStorer(size_t idx, T...) {
             static if (idx == 0)
                 alias makeIdxStorer!(idx + (stores!U).length, types, U) add;
             else
-                // todo: make parser at offset idx
-                alias makeIdxStorer!(idx + (stores!U).length, types)    add;
+                alias makeIdxStorer!(
+                    idx + (stores!U).length, types, parseTupleFrom!(idx, U)) add;
         }
         else
             alias makeIdxStorer!(idx + 1, types, parseSeqIdx!(idx, U))  add;

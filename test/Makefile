@@ -1,7 +1,7 @@
 .SECONDARY:
-.PHONY: default tbpeg teg variant choice joined lexeme
+.PHONY: default tbpeg teg variant choice joined lexeme sequence
 
-default: variant teg maths choice joined lexeme
+default: variant teg maths choice joined lexeme sequence
 
 debug     ?= 1
 cwd       ?= ..
@@ -20,3 +20,4 @@ variant: ${outpath}/variant
 choice: ${outpath}/choice
 joined: ${outpath}/joined
 lexeme: ${outpath}/lexeme
+sequence: ${outpath}/sequence

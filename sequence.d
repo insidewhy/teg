@@ -7,17 +7,8 @@ import teg.skip;
 import beard.meta.type_list : TL;
 import beard.meta.fold_left : foldLeft, foldLeft2;
 
-import std.typetuple;
+import std.typetuple : isTuple, staticMap;
 import std.typecons;
-
-// used for sequences storing tuples within sequences.
-// if there is a way I can pass variadic alias parameters this can be
-// done more optimally.
-private struct OffsetView(size_t _offset, T) {
-    enum offset = _offset;
-    this(T tup) { tuple_ = &tup; }
-    T *tuple_;
-}
 
 private template flattenAppend(alias T, U) {
     static if (is(U : void))
@@ -37,6 +28,9 @@ private template sequenceStorage(T...) {
         alias Tuple!T sequenceStorage;
 }
 
+// used for sequences storing tuples within sequences.
+// if there is a way I can pass variadic alias parameters this can be
+// done more optimally.
 private struct TupleOffset(size_t idx_, T) {
     alias void __IsTupleOffset;
     this(T *tup) { tuple = tup; }
@@ -45,18 +39,21 @@ private struct TupleOffset(size_t idx_, T) {
     T *tuple;
 }
 
+private template isLikeTuple(T) {
+    enum isLikeTuple = isTuple!(T) || is(T.__IsTupleOffset);
+}
+
 private auto ref get(size_t idx, T)(ref T tuple)  {
-    static if (is(tuple.__IsTupleOffset)) {
-        return (*tuple.tuple)[idx + tuple.idx];
-    }
+    static if (is(tuple.__IsTupleOffset))
+        return get!(idx + tuple.idx)(*tuple.tuple);
     else
         return tuple[idx];
 }
 
 private struct parseSeqIdx(size_t idx, P) {
     static bool skip(S, O)(S s, ref O o) {
-        static if (isTuple!O || is(O.__IsTupleOffset))
-            return P.parse(s, get!(idx, O)(o));
+        static if (isLikeTuple!O)
+            return P.parse(s, get!(idx)(o));
         else
             return P.parse(s, o);
     }
@@ -75,7 +72,7 @@ private template makeIdxStorer(size_t idx, T...) {
     template add(U) {
         static if (! storesSomething!U)
             alias makeIdxStorer!(idx, types, Skip!U)                    add;
-        else static if (isTuple!(stores!U)) {
+        else static if (isLikeTuple!(stores!U)) {
             static if (idx == 0)
                 alias makeIdxStorer!(idx + (stores!U).length, types, U) add;
             else

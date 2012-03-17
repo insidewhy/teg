@@ -68,6 +68,15 @@ private template choiceParser(alias S, bool CanBeEmpty, P...) {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// try to force the parser to store if possible
+private template skips(T) {
+    static if (! storesSomething!T && __traits(hasMember, T, "SkippedParser"))
+        alias T.SkippedParser skips;
+    else
+        alias T skips;
+}
+
 class Choice(T...) if (T.length > 1) {
     mixin storingParser;
 

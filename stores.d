@@ -45,13 +45,3 @@ template storesVariant(T...) {
 template storesCharOrRange(T...) {
     enum storesCharOrRange = storesRange!T || storesChar!T;
 }
-
-//////////////////////////////////////////////////////////////////////////////
-// like stores but looser as returns what type the parser skips over for
-// certain void storing parsers like Char.
-template skips(T) {
-    static if (! storesSomething!T && __traits(hasMember, T, "SkippedParser"))
-        alias T.SkippedParser skips;
-    else
-        alias T skips;
-}

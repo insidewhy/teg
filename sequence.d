@@ -7,8 +7,8 @@ import teg.skip;
 import beard.meta.type_list : TL;
 import beard.meta.fold_left : foldLeft, foldLeft2;
 
-import std.typetuple : isTuple, staticMap;
-import std.typecons;
+import std.typetuple : staticMap;
+import std.typecons : isTuple, Tuple;
 
 private template flattenAppend(alias T, U) {
     static if (is(U : void))

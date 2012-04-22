@@ -5,7 +5,7 @@ import teg.detail.tree;
 import teg.stores;
 
 import beard.meta.find : filter;
-import beard.meta.map : map;
+import std.typetuple : staticMap;
 
 // Like optional but split storage of including parser in a variant.
 class TreeOptional(T...) {
@@ -30,7 +30,7 @@ class TreeOptionalSequence(alias SeqT, NodeT, T...) {
     mixin storingParser;
 
     alias SeqT!(filter!(isTreeOptional, T))  ShortParser;
-    alias SeqT!(map!(removeTreeOptional, T)) LongParser;
+    alias SeqT!(staticMap!(removeTreeOptional, T)) LongParser;
 
     mixin TreeParser!NodeT;
 

@@ -18,11 +18,10 @@ struct Range {
     }
 
     string toString() {
-        if (sourceStream_)
-            return '"' ~ sourceStream_.sub(begin_, end_) ~ '"';
-        else
-            return "<unset>";
+        return sourceStream_ ? '"' ~ str() ~ '"' : "<unset>";
     }
+
+    string str() { return sourceStream_.sub(begin_, end_); }
 
     this(BasicStream src) { parsing(src); }
 

@@ -46,6 +46,8 @@ class BasicFileStream : BasicStream {
         reset();
     }
 
+    string path() { return filepath_; }
+
     this(string filepath) { open(filepath); }
     this() {}
 
